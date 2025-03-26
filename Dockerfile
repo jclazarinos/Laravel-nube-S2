@@ -32,7 +32,7 @@ RUN mkdir -p storage bootstrap/cache && chmod -R 775 storage bootstrap/cache
 RUN composer install --no-dev --optimize-autoloader
 
 # Expone el puerto 80 para Apache
-EXPOSE 80
+EXPOSE 8080
 
 # Comando para iniciar Apache
 CMD ["apache2-foreground"]
