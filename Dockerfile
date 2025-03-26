@@ -31,6 +31,9 @@ RUN mkdir -p storage bootstrap/cache && chmod -R 775 storage bootstrap/cache
 # Instala dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
 
+# Ejecuta las migraciones
+RUN php artisan migrate --force
+
 # Expone el puerto 80 para Apache
 EXPOSE 8080
 
