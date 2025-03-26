@@ -22,8 +22,10 @@ WORKDIR /var/www/html
 # Copia el código del proyecto
 COPY . .
 
-# Da permisos a storage y bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
+
+# Crear las carpetas si no existen antes de dar permisos
+RUN mkdir -p storage bootstrap/cache && chmod -R 775 storage bootstrap/cache
+
 
 # Instala dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
