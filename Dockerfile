@@ -16,16 +16,17 @@ RUN apt-get update && apt-get install -y \
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Establece el directorio de trabajo
-WORKDIR /var/www/html
+# Establece el directorio de trabajo en Laravel (NO en /var/www/html)
+WORKDIR /var/www
 
 # Copia el código del proyecto
 COPY . .
 
+# Asegurar que Apache sirva desde la carpeta `public`
+RUN rm -rf /var/www/html && ln -s /var/www/public /var/www/html
 
-# Crear las carpetas si no existen antes de dar permisos
+# Crear las carpetas necesarias y dar permisos
 RUN mkdir -p storage bootstrap/cache && chmod -R 775 storage bootstrap/cache
-
 
 # Instala dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
